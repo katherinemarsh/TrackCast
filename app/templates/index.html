@@ -10,9 +10,17 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Open+Sans:300,400,600,300italic,600italic,700" rel="stylesheet" type="text/css" media="all">
 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!-- <script type="text/javascript" src="scripts.js"></script>
+    <script type="text/javascript" src="scriptsAPI.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>$.ajaxPrefilter(function( options, originalOptions, jqXHR ) { options.async = true; });</script> -->
   </head>
 
   <body>
+
     <div class="wrapper">
 
       <header>
@@ -36,23 +44,29 @@
 
       <div id="log-in" class="div-header-text">Log-In To Your Gpodder Account Below
 
-      <form id="log-in-form" action="/" method="post">
-        <input name="username" type="text" placeholder="Username" required>
+        <form id="log-in-form" action="/" method="post">
+          <input name="username" type="text" placeholder="Username" required>
 
-        <input name="password" type="password" placeholder="Password" required>
+          <input name="password" type="password" placeholder="Password" required>
 
-        <input type='submit' value="Log-In">
-      </form>
+          <input type='submit' value="Log-In">
+        </form>
 
-    </div>
+      </div>
 
-    <div id="subscription-section" class="div-header-text">Subscriptions
-    </div>
+      <div id="subscription-section" class="div-header-text">Subscriptions
+        <h1>{{test}}</h1>
+        {% for podcast in subscriptions %}
+          {% for p in podcast %}
+            <p>{{p}}</p>
+          {% endfor %}
+        {% endfor %}
+      </div>
 
 
-    <div id="search-section" class="div-header-text">Search</div>
-    <div id="recommended-section" class="div-header-text">Recommended</div>
-    <div id="listen-first-section" class="div-header-text">Listen First</div>
+      <div id="search-section" class="div-header-text">Search</div>
+      <div id="recommended-section" class="div-header-text">Recommended</div>
+      <div id="listen-first-section" class="div-header-text">Listen First</div>
 
     </div>
 
