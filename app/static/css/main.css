@@ -33,3 +33,113 @@ img {
 header {
   width: 100%;
 }
+.logo-img {
+  font-size: 2.75em;
+  color: #e37262;
+  padding: 0 6px 0 10px;
+}
+.logo-text {
+  color: #474747;
+  padding-top: 10px;
+  padding-right: 30px;
+  font: 35px "Roboto", sans-serif;
+}
+nav {
+  width: 80%;
+  height: 35px;
+  border: 1px solid #ebebeb;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font: 12px "Montserrat", sans-serif;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 37px;
+  padding-top: 10px;
+}
+
+li {
+  box-sizing: border-box;
+  display: inline;
+  padding: 0 10px 0 10px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+textarea:focus, input:focus, button:focus{
+  outline-color: black;
+}
+
+.div-logo {
+  width: 30%;
+  margin-bottom: 30px;
+}
+
+input, button {
+  height: 35px;
+  border: 1px solid #ebebeb;
+  font: 12px "Montserrat", sans-serif;
+  letter-spacing: .2em;
+  padding: 7px 5px 5px;
+  margin: 7px 0 7px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button {
+  width: 100px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.div-header-text {
+  font: 10px "Montserrat", sans-serif;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 7px 7px 0 10px;
+  color: white;
+  border: 4px solid white;
+  border-radius: 20px;
+}
+
+#log-in {
+  display: block;
+  color: inherit;
+  width: 25%;
+  height: 400px;
+  background-color: #f2f0ed;
+}
+
+#log-in-form {
+  margin-top: 60px;
+}
+
+#subscription-section {
+  width: 75%;
+  height: 400px;
+  background-color: #424a54;
+
+}
+
+#search-section {
+  width: 100%;
+  height: 400px;
+  background-color: #e37262;
+}
+
+#recommended-section {
+  width: 100%;
+  height: 400px;
+  background-color: #eceadf;
+}
+
+#listen-first-section {
+  width: 100%;
+  height: 100px;
+  background-color: #8e7985;
+}
