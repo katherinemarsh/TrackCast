@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TrackCast</title>
+  <title>TrackCast</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Open+Sans:300,400,600,300italic,600italic,700" rel="stylesheet" type="text/css" media="all">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Open+Sans:300,400,600,300italic,600italic,700" rel="stylesheet" type="text/css" media="all">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
-    <!-- <script type="text/javascript" src="scripts.js"></script>
-    <script type="text/javascript" src="scriptsAPI.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>$.ajaxPrefilter(function( options, originalOptions, jqXHR ) { options.async = true; });</script> -->
-  </head>
+  <!-- <script type="text/javascript" src="scripts.js"></script>
+  <script type="text/javascript" src="scriptsAPI.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>$.ajaxPrefilter(function( options, originalOptions, jqXHR ) { options.async = true; });</script> -->
+</head>
 
   <body>
 
@@ -55,13 +55,16 @@
       </div>
 
       <div id="subscription-section" class="div-header-text">Subscriptions
-        {% for i in range(lengthCount) %}
-          <p>{{subscriptions[0][i]}}</p>
-          <img src="{{subscriptions[1][i]}}"/>
-          <p>{{subscriptions[2][i]}}</p>
-          </br>
-        {% endfor %}
+        <div class="grid-container">
+          {% for i in range(lengthCount) %}
+            <div class="grid-item">
+              <p>{{subscriptions[0][i]}}</p>
+              <img src="{{subscriptions[1][i]}}"/>
+            </div>
+          {% endfor %}
+        </div>
       </div>
+    </div>
 
 
       <div id="search-section" class="div-header-text">Search
@@ -72,14 +75,22 @@
 
         </form>
 
-        <div class="grid-container">
+          {% for i in range(length) %}
+            <p>{{searchResults[0][i]}}</p>
+            <img src="{{subscriptions[1][i]}}"/>
+            <p>{{searchResults[2][i]}}</p>
+            </br>
+          {% endfor %}
 
-
-        </div>
       </div>
 
-      <div id="recommended-section" class="div-header-text">Recommended</div>
-      <div id="listen-first-section" class="div-header-text">Listen First</div>
+      <div id="recommended-section" class="div-header-text">Recommended
+        <h1 class="test"> TEST 2 </h1>
+      </div>
+
+      <div id="listen-first-section" class="div-header-text">Listen First
+
+      </div>
 
     </div>
 

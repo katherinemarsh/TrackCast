@@ -6,7 +6,8 @@ import json
 app = Flask(__name__)
 @app.route('/')
 def home():
-    return render_template('index.html')
+    subscriptions = [0, 0], [0, 0], [0, 0];
+    return render_template('index.html', subscriptions=subscriptions, lengthCount=0, length=0)
 
 @app.route('/', methods=["POST"])
 def formhandler():
@@ -38,10 +39,11 @@ def formhandler():
 
     podcastInfo = [titleList, imgList, descriptionList]
     lengthCount = len(podcastInfo[0])
+    searchResults = [0, 0], [0, 0], [0, 0];
 
-    return render_template('index.html', subscriptions=podcastInfo, lengthCount=lengthCount)
+    return render_template('index.html', subscriptions=podcastInfo, lengthCount=lengthCount, searchResults=searchResults, length=0)
 
-@app.route('/search', methods=["POST"])
+@app.route('/search', methods=["GET", "POST"])
 def searchhandler():
     """Handle the form submission"""
 
@@ -71,9 +73,6 @@ def searchhandler():
     searchPodcastInfo = [titleList, descriptionList, imgList]
     length = len(searchPodcastInfo[0])
 
-    return add_search_page(searchPodcastInfo, length)
-
-def add_search_page(searchPodcastInfo, length):
     return render_template('index.html', searchResults=searchPodcastInfo, length=5)
 
 if __name__ == '__main__':
