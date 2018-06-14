@@ -49,22 +49,35 @@
 
           <input name="password" type="password" placeholder="Password" required>
 
-          <input type='submit' value="Log-In">
+          <input type="submit" value="Log-In">
         </form>
 
       </div>
 
       <div id="subscription-section" class="div-header-text">Subscriptions
-        <h1>{{test}}</h1>
-        {% for podcast in subscriptions %}
-          {% for p in podcast %}
-            <p>{{p}}</p>
-          {% endfor %}
+        {% for i in range(lengthCount) %}
+          <p>{{subscriptions[0][i]}}</p>
+          <img src="{{subscriptions[1][i]}}"/>
+          <p>{{subscriptions[2][i]}}</p>
+          </br>
         {% endfor %}
       </div>
 
 
-      <div id="search-section" class="div-header-text">Search</div>
+      <div id="search-section" class="div-header-text">Search
+        <form action="/search">
+
+          <input name="search" type="text" placeholder="Search For Podcasts" required>
+          <button class="btn"><i class="fas fa-search"></i></button>
+
+        </form>
+
+        <div class="grid-container">
+
+
+        </div>
+      </div>
+
       <div id="recommended-section" class="div-header-text">Recommended</div>
       <div id="listen-first-section" class="div-header-text">Listen First</div>
 

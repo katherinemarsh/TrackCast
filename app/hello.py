@@ -36,44 +36,29 @@ def formhandler():
                 imgList.append(value)
 
 
-    podcastInfo = [titleList, descriptionList, imgList]
+    podcastInfo = [titleList, imgList, descriptionList]
+    lengthCount = len(podcastInfo[0])
 
-    return add_subs_page(podcastInfo)
+    return render_template('index.html', subscriptions=podcastInfo, lengthCount=lengthCount)
 
-def add_subs_page(podcastInfo):
-    return render_template('index.html', subscriptions=podcastInfo, test=5)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-from flask import *
-import pandas as pd
-import requests
-import json
-
-app = Flask(__name__)
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/', methods=["POST"])
-def formhandler():
+@app.route('/search', methods=["POST"])
+def searchhandler():
     """Handle the form submission"""
 
-    uName = request.form['username']
-    pWord = request.form['password']
+    searchInput = request.form['search']
 
     url = 'https://gpodder.net';
-    subs = url + '/subscriptions/' + uName + '.json';
+    search = url + '/search.json';
 
-    subsJson = requests.get(subs, auth=(uName, pWord))
+    searchJson = requests.get(search)
 
-    subsList = subsJson.json();
+    searchList = searchJson.json();
 
     titleList = []
     descriptionList = []
     imgList = []
 
-    for podcast in subsList:
+    for podcast in searchList:
         for attribute, value in podcast.items():
             if attribute == "title":
                 titleList.append(value)
@@ -83,12 +68,13 @@ def formhandler():
                 imgList.append(value)
 
 
-    podcastInfo = [titleList, descriptionList, imgList]
+    searchPodcastInfo = [titleList, descriptionList, imgList]
+    length = len(searchPodcastInfo[0])
 
-    return add_subs_page(podcastInfo)
+    return add_search_page(searchPodcastInfo, length)
 
-def add_subs_page(podcastInfo):
-    return render_template('index.html', subscriptions=podcastInfo, test=5)
+def add_search_page(searchPodcastInfo, length):
+    return render_template('index.html', searchResults=searchPodcastInfo, length=5)
 
 if __name__ == '__main__':
     app.run(debug=True)
