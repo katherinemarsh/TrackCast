@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
 @app.route('/')
 def home():
-    subscriptions = [0, 0], [0, 0], [0, 0];
+    subscriptions = [0, 0], [0, 0], [0, 0]
     return render_template('index.html', subscriptions=subscriptions, lengthCount=0, length=0)
 
 @app.route('/', methods=["POST"])
@@ -39,18 +39,18 @@ def formhandler():
 
     podcastInfo = [titleList, imgList, descriptionList]
     lengthCount = len(podcastInfo[0])
-    searchResults = [0, 0], [0, 0], [0, 0];
+    searchResults = [0, 0], [0, 0], [0, 0]
 
     return render_template('index.html', subscriptions=podcastInfo, lengthCount=lengthCount, searchResults=searchResults, length=0)
 
-@app.route('/search', methods=["GET", "POST"])
+@app.route('/search', methods=["POST"])
 def searchhandler():
     """Handle the form submission"""
 
-    searchInput = request.form['search']
+    searchInput = request.form['searchInput']
 
     url = 'https://gpodder.net';
-    search = url + '/search.json';
+    search = url + '/search.json?q=' + searchInput
 
     searchJson = requests.get(search)
 
@@ -70,10 +70,10 @@ def searchhandler():
                 imgList.append(value)
 
 
-    searchPodcastInfo = [titleList, descriptionList, imgList]
+    searchPodcastInfo = [titleList, imgList, descriptionList]
     length = len(searchPodcastInfo[0])
-
-    return render_template('index.html', searchResults=searchPodcastInfo, length=5)
+    subscriptions = [0, 0], [0, 0], [0, 0]
+    return render_template('index.html', searchResults=searchPodcastInfo, length=length, lengthCount=0, subscriptions=subscriptions)
 
 if __name__ == '__main__':
     app.run(debug=True)

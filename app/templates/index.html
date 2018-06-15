@@ -68,19 +68,21 @@
 
 
       <div id="search-section" class="div-header-text">Search
-        <form action="/search">
+        <form action="/search" method="post">
 
-          <input name="search" type="text" placeholder="Search For Podcasts" required>
+          <input name="searchInput" type="text" placeholder="Search For Podcasts" required>
           <button class="btn"><i class="fas fa-search"></i></button>
 
         </form>
 
+        <div class="grid-container">
           {% for i in range(length) %}
-            <p>{{searchResults[0][i]}}</p>
-            <img src="{{subscriptions[1][i]}}"/>
-            <p>{{searchResults[2][i]}}</p>
-            </br>
+            <div class="grid-item">
+              <p>{{searchResults[0][i]}}</p>
+              <img src="{{searchResults[1][i]}}"/>
+            </div>
           {% endfor %}
+        </div>
 
       </div>
 
