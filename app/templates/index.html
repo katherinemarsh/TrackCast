@@ -85,8 +85,24 @@
         </div>
       </div>
 
-      <div id="recommended-section" class="div-header-text">Recommended
-        <h1 class="test"> TEST 2 </h1>
+      <div id="recommended-section" class="div-header-text">Browse
+        <form action="/browse" method="post">
+          <select name="browseChoice">
+            {% for i in range(7) %}
+              <option value="{{topTagsInfoList[0][i]}}">{{topTagsInfoList[0][i]}}</option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="Browse">
+        <form>
+
+        <div class="grid-container">
+          {% for i in range(25) %}
+            <div class="grid-item">
+              <p>{{browsePodcastInfo[0][i]}}</p>
+              <img src="{{browsePodcastInfo[1][i]}}"/>
+            </div>
+          {% endfor %}
+        </div>
       </div>
 
       <div id="listen-first-section" class="div-header-text">Listen First
