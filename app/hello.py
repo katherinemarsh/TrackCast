@@ -111,14 +111,13 @@ def browsehandler():
         if topTagsInfoList[0][i] == browseChoice:
             tagSearch = topTagsInfoList[1][i]
 
-    browsePodcastInfo = []
     titleList = []
     descriptionList = []
     imgList = []
     subList = []
 
     for i in range(len(tagSearch)):
-        browse = url + '/api/2/tag/' + tagSearch[i] + '/20.json'
+        browse = url + '/api/2/tag/' + tagSearch[i] + '/50.json'
         browseList = requests.get(browse)
         browseJson = browseList.json()
 
@@ -133,14 +132,13 @@ def browsehandler():
                 if attribute == "subscribers":
                     subList.append(value)
 
-    browsePodcastInfo = [titleList], [descriptionList], [imgList], [subList]
-    return str(browsePodcastInfo)
-
+    browsePodcastInfo = [titleList, descriptionList, imgList, subList]
+    # return str(browsePodcastInfo)
     #sort by popularity (subscriber number descending)
+
     browsePodcastInfo = zip(*browsePodcastInfo)
-    browsePodcastInfo.sort(key=lambda item: item[3])
+    browsePodcastInfo.sort(reverse=True, key=lambda item: item[3])
     browsePodcastInfo = zip(*browsePodcastInfo)
-    return str(browsePodcastInfo)
 
     subscriptions = [0, 0], [0, 0], [0, 0]
     searchPodcastInfo = [0, 0], [0, 0], [0, 0]
