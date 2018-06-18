@@ -59,7 +59,16 @@ def getTopPodcasts():
     return topPodcastsInfoList
 
 def listenFirst(topPodcastsInfoList):
+    daysBwEpList = []
+
+    # the following urls needed to be fixed to prevent 403 errors
+    topPodcastsInfoList[3][1] = 'http://feed.thisamericanlife.org/talpodcast?format=xml'
+    topPodcastsInfoList[3][9] = 'https://www.engadget.com/rss.xml'
+    topPodcastsInfoList[3][18] = 'https://feed.theskepticsguide.org/feed/rss'
+
+
     for feedUrl in topPodcastsInfoList[3]:
+        # hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'}
         tree = ET.ElementTree(file=urllib2.urlopen(feedUrl))
         root = tree.getroot()
 
@@ -68,32 +77,69 @@ def listenFirst(topPodcastsInfoList):
             allDates.append(date.text)
 
         # getting two most recent episode release dates
-        allDates = allDates[:2]
+        allDates = allDates[:50]
 
         # converting to datetime objects and calculating time difference to determine podcast frequency
-        daysBwEpList = []
+        for i in range(len(allDates)):
+            allDates[i] = parser.parse(allDates[i])
 
-        mostRecentEp = parser.parse(allDates[0])
-        allrecentEpDates.append(mostRecentEp)
-        previousEp = parser.parse(allDates[1])
+        sumDiff = 0
+        for i in range(len(allDates) - 1):
+            sumDiff += (allDates[i] - allDates[i+1]).days
 
-        daysBwEp = (mostRecentEp - previousEp).days
-        daysBwEpList.append(daysBwEp)
+        avgDayDiff = sumDiff / (len(allDates) - 1)
+
+        daysBwEpList.append(avgDayDiff)
 
     # below list contains:
-    # row 0 - of top 25 podcast titles
-    # row 1 - frequency of episode release for each of these podcasts in days
-    podcastAndFreqList = [topPodcastsInfoList[0], daysBwEpList]
+    # row 0-2 - title, desc, and img of top 25 podcast titles
+    # row 3 - frequency of episode release for each of these podcasts in days
+    podcastAndFreqList = [topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList]
 
     #sorting in order of most frequent to least frequent (days ascending)
+    podcastAndFreqList = zip(*podcastAndFreqList)
+    podcastAndFreqList.sort(key=lambda item: item[4])
+    podcastAndFreqList = zip(*podcastAndFreqList)
     return podcastAndFreqList
 
+def mostRecent(topPodcastsInfoList):
+    daysBwEpList = []
+    feedUrlList = topPodcastsInfoList[3]
+
+    # the following were causing http 403 errors
+    feedUrlList.remove('http://feeds.thisamericanlife.org/talpodcast')
+    feedUrlList.remove('http://podcasts.engadget.com/rss.xml')
+    feedUrlList.remove('http://www.theskepticsguide.org/feed/rss.aspx?feed=SGU')
+
+
+    for feedUrl in feedUrlList:
+        tree = ET.ElementTree(file=urllib2.urlopen(feedUrl))
+        root = tree.getroot()
+
+        allDates = []
+        for date in root.find("./channel/item/pubDate"):
+            allDates.append(date.text)
+
+    # converting to datetime objects and calculating time difference to determine podcast frequency
+    for i in range(len(allDates)):
+        allDates[i] = parser.parse(allDates[i])
+
+    # below list contains:
+    # row 0-2 - title, desc, and img of top 25 podcast titles
+    # row 3 - frequency of episode release for each of these podcasts in days
+    podcastAndFreqList = [topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList]
+
+    #sorting in order of most frequent to least frequent (days ascending)
+    podcastAndFreqList = zip(*podcastAndFreqList)
+    podcastAndFreqList.sort(key=lambda item: item[4])
+    podcastAndFreqList = zip(*podcastAndFreqList)
+    return podcastAndFreqList
 @app.route('/')
 def home():
     topPodcastsInfoList = getTopPodcasts()
     topTagsInfoList = getTopTags()
-    return str(topPodcastsInfoList[3])
-    # return render_template('index.html', topTagsInfoList=topTagsInfoList, topPodcastsInfoList=topPodcastsInfoList)
+    return str(listenFirst(topPodcastsInfoList))
+    return render_template('index.html', topTagsInfoList=topTagsInfoList, topPodcastsInfoList=topPodcastsInfoList)
 
 @app.route('/', methods=["POST"])
 def formhandler():
