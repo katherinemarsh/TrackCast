@@ -1,6 +1,5 @@
 from flask import *
 import pandas as pd
-import numpy as np
 import requests
 import json
 
@@ -50,14 +49,21 @@ def getTopTags():
     topTagsInfoList = [titleList, tagList]
     return topTagsInfoList
 
+def getTopPodcasts():
+
+    topPodcasts = url + '/toplist/25.json'
+
+    topPodcastsJson = requests.get(topPodcasts)
+
+    topPodcastsInfoList = makePodcastArr(topPodcastsJson)
+
+    return topPodcastsInfoList
+
 @app.route('/')
 def home():
-    subscriptions = [0, 0], [0, 0], [0, 0]
-    browsePodcastInfo = [0, 0], [0, 0], [0, 0]
-    searchPodcastInfo = [0, 0], [0, 0], [0, 0]
-
+    topPodcastsInfoList = getTopPodcasts()
     topTagsInfoList = getTopTags()
-    return render_template('index.html', subscriptions=subscriptions, lengthCount=0, length=0, topTagsInfoList=topTagsInfoList, browsePodcastInfo=browsePodcastInfo)
+    return render_template('index.html', topTagsInfoList=topTagsInfoList, topPodcastsInfoList=topPodcastsInfoList)
 
 @app.route('/', methods=["POST"])
 def formhandler():
@@ -79,7 +85,7 @@ def formhandler():
 
     topTagsInfoList = getTopTags()
 
-    return render_template('index.html', subscriptions=podcastInfo, lengthCount=lengthCount, searchResults=searchResults, length=0, topTagsInfoList=topTagsInfoList, browsePodcastInfo=browsePodcastInfo)
+    return render_template('index.html', subscriptions=podcastInfo, lengthCount=lengthCount, topTagsInfoList=topTagsInfoList)
 
 @app.route('/search', methods=["POST"])
 def searchhandler():
@@ -98,7 +104,7 @@ def searchhandler():
 
     topTagsInfoList = getTopTags()
 
-    return render_template('index.html', searchResults=searchPodcastInfo, length=length, lengthCount=0, subscriptions=subscriptions, topTagsInfoList=topTagsInfoList, browsePodcastInfo=browsePodcastInfo)
+    return render_template('index.html', searchResults=searchPodcastInfo, length=length, lengthCount=0, subscriptions=subscriptions, topTagsInfoList=topTagsInfoList)
 
 @app.route('/browse', methods=["POST"])
 def browsehandler():
@@ -117,7 +123,7 @@ def browsehandler():
     subList = []
 
     for i in range(len(tagSearch)):
-        browse = url + '/api/2/tag/' + tagSearch[i] + '/50.json'
+        browse = url + '/api/2/tag/' + tagSearch[i] + '/100.json'
         browseList = requests.get(browse)
         browseJson = browseList.json()
 
@@ -133,7 +139,6 @@ def browsehandler():
                     subList.append(value)
 
     browsePodcastInfo = [titleList, descriptionList, imgList, subList]
-    # return str(browsePodcastInfo)
     #sort by popularity (subscriber number descending)
 
     browsePodcastInfo = zip(*browsePodcastInfo)
@@ -145,7 +150,7 @@ def browsehandler():
     topTagsInfoList = getTopTags()
 
     # just need to implement below!
-    return render_template('index.html', searchResults=searchPodcastInfo, length=0, lengthCount=0, subscriptions=subscriptions, topTagsInfoList=topTagsInfoList, browsePodcastInfo=browsePodcastInfo)
+    return render_template('index.html', lengthCount=0, subscriptions=subscriptions, topTagsInfoList=topTagsInfoList, browsePodcastInfo=browsePodcastInfo)
 
 if __name__ == '__main__':
     app.run(debug=True)

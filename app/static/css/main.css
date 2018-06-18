@@ -127,6 +127,17 @@ button {
 
 }
 
+#top-section {
+  width: 100%;
+  height: auto;
+  background-color: #424a54;
+}
+
+#search-section .grid-item {
+  background-color: #eceadf;
+  color: black;
+}
+
 #search-section {
   width: 100%;
   height: auto;
@@ -157,7 +168,7 @@ button {
   color: #d6d6d6;
 }
 
-#recommended-section {
+#browse-section {
   width: 100%;
   height: auto;
   background-color: #eceadf;

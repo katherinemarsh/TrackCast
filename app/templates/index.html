@@ -35,7 +35,8 @@
       <nav>
         <ul>
           <li><a href="#subscrition-section">Subscriptions</a></li>
-          <li><a href="#search-section">Search For Podcasts</a></li>
+          <li><a href="#search-section">Search</a></li>
+          <li><a href="#top-section">Top Podcasts</a></li>
           <li><a href="">Browse</a></li>
           <li><a href="">Recommended</a></li>
           <li><a href="">Listen First</a></li>
@@ -54,38 +55,58 @@
 
       </div>
 
+      <!-- Begin Subscription Section -->
       <div id="subscription-section" class="div-header-text">Subscriptions
-        <div class="grid-container">
-          {% for i in range(lengthCount) %}
-            <div class="grid-item">
-              <p>{{subscriptions[0][i]}}</p>
-              <img src="{{subscriptions[1][i]}}"/>
-            </div>
-          {% endfor %}
-        </div>
+        {% if subscriptions and lengthCount %}
+          <div class="grid-container">
+            {% for i in range(lengthCount) %}
+              <div class="grid-item">
+                <p>{{subscriptions[0][i]}}</p>
+                <img src="{{subscriptions[1][i]}}"/>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
-    </div>
 
-
+      <!-- Begin Search Section -->
       <div id="search-section" class="div-header-text">Search
-        <form action="/search" method="post">
 
+        <!-- User submits search query here -->
+        <form action="/search" method="post">
           <input name="searchInput" type="text" placeholder="Search For Podcasts" required>
           <button class="btn"><i class="fas fa-search"></i></button>
-
         </form>
 
-        <div class="grid-container">
-          {% for i in range(length) %}
-            <div class="grid-item">
-              <p>{{searchResults[0][i]}}</p>
-              <img src="{{searchResults[1][i]}}"/>
-            </div>
-          {% endfor %}
-        </div>
+        {% if searchResults and length %}
+          <div class="grid-container">
+            {% for i in range(length) %}
+              <div class="grid-item">
+                <p>{{searchResults[0][i]}}</p>
+                <img src="{{searchResults[1][i]}}"/>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
 
-      <div id="recommended-section" class="div-header-text">Browse
+      <!-- Begin Toplist Section -->
+      <div id="top-section" class="div-header-text">Top Podcasts
+        {% if topPodcastsInfoList %}
+          <div class="grid-container">
+            {% for i in range(12) %}
+              <div class="grid-item">
+                <p>{{topPodcastsInfoList[0][i]}}</p>
+                <img src="{{topPodcastsInfoList[1][i]}}"/>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+
+      <!-- Begin Browse Section -->
+      <div id="browse-section" class="div-header-text">Browse
         <form action="/browse" method="post">
           <select name="browseChoice">
             {% for i in range(7) %}
@@ -93,17 +114,20 @@
             {% endfor %}
           </select>
           <input type="submit" value="Browse">
-        <form>
+        </form>
 
-        <div class="grid-container">
-          {% for i in range(24) %}
-            <div class="grid-item">
-              <p>{{browsePodcastInfo[0][i]}}</p>
-              <img src="{{browsePodcastInfo[1][i]}}"/>
-            </div>
-          {% endfor %}
-        </div>
+        {% if browsePodcastInfo %}
+          <div class="grid-container">
+            {% for i in range(16) %}
+              <div class="grid-item">
+                <p>{{browsePodcastInfo[0][i]}}</p>
+                <img src="{{browsePodcastInfo[2][i]}}"/>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
+      
 
       <div id="listen-first-section" class="div-header-text">Listen First
 
