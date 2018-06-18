@@ -10,13 +10,10 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Open+Sans:300,400,600,300italic,600italic,700" rel="stylesheet" type="text/css" media="all">
 
+
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
-  <!-- <script type="text/javascript" src="scripts.js"></script>
-  <script type="text/javascript" src="scriptsAPI.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script>$.ajaxPrefilter(function( options, originalOptions, jqXHR ) { options.async = true; });</script> -->
 </head>
 
   <body>
@@ -37,13 +34,13 @@
           <li><a href="#subscrition-section">Subscriptions</a></li>
           <li><a href="#search-section">Search</a></li>
           <li><a href="#top-section">Top Podcasts</a></li>
-          <li><a href="">Browse</a></li>
-          <li><a href="">Recommended</a></li>
-          <li><a href="">Listen First</a></li>
+          <li><a href="#browse-section">Browse</a></li>
+          <li><a href="#recommended-section">Recommended</a></li>
+          <li><a href="#listen-first-section">Listen First</a></li>
         </ul>
       </nav>
 
-      <div id="log-in" class="div-header-text">Log-In To Your Gpodder Account Below
+      <div id="log-in" class="div-header-text">Log-In To Your Gpodder Account Below To View Your Subscriptions
 
         <form id="log-in-form" action="/" method="post">
           <input name="username" type="text" placeholder="Username" required>
@@ -127,7 +124,11 @@
           </div>
         {% endif %}
       </div>
-      
+
+      <div id="recommended-section" class="div-header-text">Recommended
+
+      </div>
+
 
       <div id="listen-first-section" class="div-header-text">Listen First
 

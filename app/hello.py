@@ -1,7 +1,10 @@
 from flask import *
-import pandas as pd
 import requests
 import json
+import xml.etree.cElementTree as ET
+import urllib2
+from dateutil import parser
+from datetime import date
 
 app = Flask(__name__)
 
@@ -13,6 +16,7 @@ def makePodcastArr(requestList):
     titleList = []
     descriptionList = []
     imgList = []
+    feedUrlList = []
 
     for podcast in requestJson:
         for attribute, value in podcast.items():
@@ -22,29 +26,24 @@ def makePodcastArr(requestList):
                 descriptionList.append(value)
             if attribute == "scaled_logo_url":
                 imgList.append(value)
+            if attribute == "url":
+                feedUrlList.append(value)
 
 
-    podcastInfo = [titleList, imgList, descriptionList]
+    podcastInfo = [titleList, imgList, descriptionList, feedUrlList]
     return podcastInfo
 
 def getTopTags():
 
     # topTags = url + '/api/2/tags/15.json'
-    #
     # topTagsJson = requests.get(topTags)
-    #
     # topTagsList = topTagsJson.json();
 
+    #above api request was not sorted by most popular tags
+    #below is hand picked result from Jupyter Notebook parse of the api data in an attempt to use most popular tags
     titleList = ["Select a Genre...", "Arts & Entertainment", "Comedy", "News & Politics", "Science and Medicine", "Society & Culture", "Technology"]
     tagList = [[""], ["performing-arts", "arts", "arts-entertainment", "literature"], ["comedy"], ["news-politics", "news"], ["science-medicine"],
                   ["society-culture", "education"], ["technology", "tech-news", "gadgets", "other-games"]]
-
-    # for podcast in topTagsList:
-    #     for attribute, value in podcast.items():
-    #         if attribute == "title":
-    #             titleList.append(value)
-    #         if attribute == "tag":
-    #             tagList.append(value)
 
     topTagsInfoList = [titleList, tagList]
     return topTagsInfoList
@@ -59,11 +58,42 @@ def getTopPodcasts():
 
     return topPodcastsInfoList
 
+def listenFirst(topPodcastsInfoList):
+    for feedUrl in topPodcastsInfoList[3]:
+        tree = ET.ElementTree(file=urllib2.urlopen(feedUrl))
+        root = tree.getroot()
+
+        allDates = []
+        for date in root.findall("./channel/item/pubDate"):
+            allDates.append(date.text)
+
+        # getting two most recent episode release dates
+        allDates = allDates[:2]
+
+        # converting to datetime objects and calculating time difference to determine podcast frequency
+        daysBwEpList = []
+
+        mostRecentEp = parser.parse(allDates[0])
+        allrecentEpDates.append(mostRecentEp)
+        previousEp = parser.parse(allDates[1])
+
+        daysBwEp = (mostRecentEp - previousEp).days
+        daysBwEpList.append(daysBwEp)
+
+    # below list contains:
+    # row 0 - of top 25 podcast titles
+    # row 1 - frequency of episode release for each of these podcasts in days
+    podcastAndFreqList = [topPodcastsInfoList[0], daysBwEpList]
+
+    #sorting in order of most frequent to least frequent (days ascending)
+    return podcastAndFreqList
+
 @app.route('/')
 def home():
     topPodcastsInfoList = getTopPodcasts()
     topTagsInfoList = getTopTags()
-    return render_template('index.html', topTagsInfoList=topTagsInfoList, topPodcastsInfoList=topPodcastsInfoList)
+    return str(topPodcastsInfoList[3])
+    # return render_template('index.html', topTagsInfoList=topTagsInfoList, topPodcastsInfoList=topPodcastsInfoList)
 
 @app.route('/', methods=["POST"])
 def formhandler():
