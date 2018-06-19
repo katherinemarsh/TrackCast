@@ -35,7 +35,6 @@
           <li><a href="#search-section">Search</a></li>
           <li><a href="#top-section">Top Podcasts</a></li>
           <li><a href="#browse-section">Browse</a></li>
-          <li><a href="#recommended-section">Recommended</a></li>
           <li><a href="#listen-first-section">Listen First</a></li>
         </ul>
       </nav>
@@ -125,17 +124,18 @@
         {% endif %}
       </div>
 
-      <div id="recommended-section" class="div-header-text">Recommended
-
-      </div>
-
-
+      <!-- Begin Listen First Section -->
       <div id="listen-first-section" class="div-header-text">Listen First
-
+        <p> According to the frequency of episode postings in the top 25 podcasts, to avoid falling behind on your favorite podcasts you should listen in the following order: </p>
+        {% if listenFirstList %}
+          <ol>
+            {% for podcast in listenFirstList %}
+              <li>{{podcast}}</li>
+            {% endfor %}
+          </ol>
+        {% endif %}
       </div>
 
     </div>
-
   </body>
-
 </html>

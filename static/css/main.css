@@ -173,19 +173,7 @@ button {
   color: black;
 }
 
-#recommended-section {
-  width: 100%;
-  background-color: #8e7985;
-}
-
 #listen-first-section {
   width: 100%;
   background-color: #8e7985;
-}
-
-.test {
-  font: 24px "Open Sans", sans-serif;
-  letter-spacing: none;
-  text-transform: none;
-  color: red;
 }

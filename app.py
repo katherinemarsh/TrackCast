@@ -2,7 +2,7 @@ from flask import *
 import requests
 import json
 import xml.etree.cElementTree as ET
-import urllib2
+from urllib.request import urlopen
 from dateutil import parser
 from datetime import date
 
@@ -66,10 +66,9 @@ def listenFirst(topPodcastsInfoList):
     topPodcastsInfoList[3][9] = 'https://www.engadget.com/rss.xml'
     topPodcastsInfoList[3][18] = 'https://feed.theskepticsguide.org/feed/rss'
 
-
     for feedUrl in topPodcastsInfoList[3]:
         # hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'}
-        tree = ET.ElementTree(file=urllib2.urlopen(feedUrl))
+        tree = ET.ElementTree(file=urlopen(feedUrl))
         root = tree.getroot()
 
         allDates = []
@@ -94,52 +93,31 @@ def listenFirst(topPodcastsInfoList):
     # below list contains:
     # row 0-2 - title, desc, and img of top 25 podcast titles
     # row 3 - frequency of episode release for each of these podcasts in days
-    podcastAndFreqList = [topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList]
+    # podcastAndFreqList = [topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList]
+
+    podcastAndFreqList = sorted(zip(topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList), key=lambda x: x[4])
 
     #sorting in order of most frequent to least frequent (days ascending)
-    podcastAndFreqList = zip(*podcastAndFreqList)
-    podcastAndFreqList.sort(key=lambda item: item[4])
-    podcastAndFreqList = zip(*podcastAndFreqList)
+
+    # previous method of sorting
+        # podcastAndFreqList = zip(*podcastAndFreqList)
+        # podcastAndFreqList.sort(key=lambda item: item[4])
+    # podcastAndFreqList = zip(*podcastAndFreqList)
+        # return podcastAndFreqList
+
+    # indices = range(len(podcastAndFreqList))
+    # indices.sort(key = podcastAndFreqList[4].__getitem__)
+    # for i, sublist in enumerate(podcastAndFreqList):
+    #   podcastAndFreqList[i] = [sublist[j] for j in indices]
+
     return podcastAndFreqList
 
-def mostRecent(topPodcastsInfoList):
-    daysBwEpList = []
-    feedUrlList = topPodcastsInfoList[3]
-
-    # the following were causing http 403 errors
-    feedUrlList.remove('http://feeds.thisamericanlife.org/talpodcast')
-    feedUrlList.remove('http://podcasts.engadget.com/rss.xml')
-    feedUrlList.remove('http://www.theskepticsguide.org/feed/rss.aspx?feed=SGU')
-
-
-    for feedUrl in feedUrlList:
-        tree = ET.ElementTree(file=urllib2.urlopen(feedUrl))
-        root = tree.getroot()
-
-        allDates = []
-        for date in root.find("./channel/item/pubDate"):
-            allDates.append(date.text)
-
-    # converting to datetime objects and calculating time difference to determine podcast frequency
-    for i in range(len(allDates)):
-        allDates[i] = parser.parse(allDates[i])
-
-    # below list contains:
-    # row 0-2 - title, desc, and img of top 25 podcast titles
-    # row 3 - frequency of episode release for each of these podcasts in days
-    podcastAndFreqList = [topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList]
-
-    #sorting in order of most frequent to least frequent (days ascending)
-    podcastAndFreqList = zip(*podcastAndFreqList)
-    podcastAndFreqList.sort(key=lambda item: item[4])
-    podcastAndFreqList = zip(*podcastAndFreqList)
-    return podcastAndFreqList
 @app.route('/')
 def home():
     topPodcastsInfoList = getTopPodcasts()
     topTagsInfoList = getTopTags()
-    return str(listenFirst(topPodcastsInfoList))
-    return render_template('index.html', topTagsInfoList=topTagsInfoList, topPodcastsInfoList=topPodcastsInfoList)
+    listenFirstList = listenFirst(topPodcastsInfoList)[0]
+    return render_template('index.html', topTagsInfoList=topTagsInfoList, topPodcastsInfoList=topPodcastsInfoList, listenFirstList=listenFirstList)
 
 @app.route('/', methods=["POST"])
 def formhandler():
@@ -214,12 +192,16 @@ def browsehandler():
                 if attribute == "subscribers":
                     subList.append(value)
 
-    browsePodcastInfo = [titleList, descriptionList, imgList, subList]
-    #sort by popularity (subscriber number descending)
+    # browsePodcastInfo = [titleList, descriptionList, imgList, subList]
 
-    browsePodcastInfo = zip(*browsePodcastInfo)
-    browsePodcastInfo.sort(reverse=True, key=lambda item: item[3])
-    browsePodcastInfo = zip(*browsePodcastInfo)
+    #sort by popularity (subscriber number descending)
+    browsePodcastInfo = sorted(zip(titleList, descriptionList, imgList, subList), reverse=True, key=lambda x: x[3])
+
+    #old method of sorting
+        # browsePodcastInfo = zip(*browsePodcastInfo)
+        # browsePodcastInfo.sort(reverse=True, key=lambda item: item[3])
+    # browsePodcastInfo = zip(*browsePodcastInfo)
+
 
     subscriptions = [0, 0], [0, 0], [0, 0]
     searchPodcastInfo = [0, 0], [0, 0], [0, 0]
