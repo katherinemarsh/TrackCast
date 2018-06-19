@@ -90,12 +90,8 @@ def listenFirst(topPodcastsInfoList):
 
         daysBwEpList.append(avgDayDiff)
 
-    # below list contains:
-    # row 0-2 - title, desc, and img of top 25 podcast titles
-    # row 3 - frequency of episode release for each of these podcasts in days
-    # podcastAndFreqList = [topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList]
-
-    podcastAndFreqList = sorted(zip(topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList), key=lambda x: x[4])
+    # NEED TO FIX THIS SORTED MESS!!!
+    # podcastAndFreqList = sorted(zip(topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList), key=lambda x: x[4])
 
     #sorting in order of most frequent to least frequent (days ascending)
 
@@ -110,6 +106,7 @@ def listenFirst(topPodcastsInfoList):
     # for i, sublist in enumerate(podcastAndFreqList):
     #   podcastAndFreqList[i] = [sublist[j] for j in indices]
 
+    podcastAndFreqList = [topPodcastsInfoList[0], topPodcastsInfoList[1], topPodcastsInfoList[2], topPodcastsInfoList[3], daysBwEpList]
     return podcastAndFreqList
 
 @app.route('/')
