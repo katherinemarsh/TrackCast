@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TrackCast</title>
+    <title>TrackCast</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Open+Sans:300,400,600,300italic,600italic,700" rel="stylesheet" type="text/css" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Open+Sans:300,400,600,300italic,600italic,700" rel="stylesheet" type="text/css" media="all">
 
 
-  <link rel="stylesheet" type="text/css" href="static/css/main.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
-</head>
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  </head>
 
   <body>
 
-    <div class="wrapper">
+    <!-- Link to javascript -->
+    <script src="static/js/script.js"></script>
 
+    <!-- Begins Responsive flex grid div -->
+    <div class="wrapper">
       <header>
         <img src="static/headerwatercolor.png"/>
       </header>
@@ -215,8 +217,8 @@
 
       <!-- Begin Twitter Feed Section -->
       <div id="twitter-feed-section" class="div-header-text">Twitter feed
-        <h3> Follow some of the top podcasts' twitter feeds and discover more podcasts to follow!</h3>
         <div class="twitter">
+          <h3> Follow some of the top podcasts' twitter feeds and discover more podcasts to follow!</h3>
           <a class="twitter-timeline"
             href="https://twitter.com/TrackcastTweets/lists/trackcasttwitter?ref_src=twsrc%5Etfw"
             data-width="500"
@@ -227,56 +229,5 @@
       </div>
 
     </div>
-
-    <!--  Javascript for displaying podcast modals -->
-    <script>
-      function show_modal_top(clicked_id) {
-        var idNum = clicked_id.substring(14);
-        var modal = document.getElementById('modal-item-top-' + idNum);
-        modal.style.display = "block";
-      }
-
-      function hide_modal_top(clicked_id) {
-        var idNum = clicked_id.substring(10);
-        var modal = document.getElementById('modal-item-top-' + idNum);
-        modal.style.display = "none";
-      }
-
-      function show_modal_search(clicked_id) {
-        var idNum = clicked_id.substring(17);
-        var modal = document.getElementById('modal-item-search-' + idNum);
-        modal.style.display = "block";
-      }
-
-      function hide_modal_search(clicked_id) {
-        var idNum = clicked_id.substring(13);
-        var modal = document.getElementById('modal-item-search-' + idNum);
-        modal.style.display = "none";
-      }
-
-      function show_modal_sub(clicked_id) {
-        var idNum = clicked_id.substring(14);
-        var modal = document.getElementById('modal-item-sub-' + idNum);
-        modal.style.display = "block";
-      }
-
-      function hide_modal_sub(clicked_id) {
-        var idNum = clicked_id.substring(10);
-        var modal = document.getElementById('modal-item-sub-' + idNum);
-        modal.style.display = "none";
-      }
-
-      function show_modal_browse(clicked_id) {
-        var idNum = clicked_id.substring(17);
-        var modal = document.getElementById('modal-item-browse-' + idNum);
-        modal.style.display = "block";
-      }
-
-      function hide_modal_browse(clicked_id) {
-        var idNum = clicked_id.substring(13);
-        var modal = document.getElementById('modal-item-browse-' + idNum);
-        modal.style.display = "none";
-      }
-    </script>
   </body>
 </html>

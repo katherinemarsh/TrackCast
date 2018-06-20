@@ -211,8 +211,11 @@ button {
 #twitter-feed-section {
   width: 100%;
   background-color: #e37262;
-  text-align: center;
   padding-bottom: 30px;
+}
+
+.twitter {
+  text-align: center;
 }
 
 #twitter-feed-section h3{
@@ -259,4 +262,46 @@ button {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 400px) {
+  #log-in {
+    width: 100%;
+  }
+  #subscription-section {
+    width: 100%;
+  }
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  nav {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 401px) and (max-width: 800px) {
+  body {
+    font-size: 1em;
+  }
+  #log-in {
+    width: 100%;
+  }
+  #subscription-section {
+    width: 100%;
+  }
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
+  }
+  nav {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .wrapper {
+    margin-left: 10%;
+    margin-right: 10%;
+    max-width: 100%;
+  }
 }
