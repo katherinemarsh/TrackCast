@@ -157,7 +157,7 @@
 
 
       <!-- Begin Browse Section -->
-      <div id="browse-section" class="div-header-text">Browse
+      <div id="browse-section" class="div-header-text">Browse (Sorted by popularity)
         <form action="/browse" method="post">
           <select name="browseChoice">
             {% for i in range(7) %}
@@ -178,7 +178,7 @@
               <div id="modal-item-browse-{{i}}" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
-                  <span class="close" id="close-sub-{{i}}" onClick="hide_modal_browse(this.id)">&times;</span>
+                  <span class="close" id="close-browse-{{i}}" onClick="hide_modal_browse(this.id)">&times;</span>
                   <h3>{{browsePodList[0][i]}}</h3>
                   </br>
                   <h4>Description:</h4>

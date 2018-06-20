@@ -249,8 +249,13 @@ button {
 }
 
 /* Responsive styling */
+@media screen (max-width: 400px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
 
-@media screen and (max-width: 800px) {
+@media screen (max-width: 800px) {
   #log-in {
     width: 100%;
   }
@@ -262,6 +267,5 @@ button {
   }
   nav li {
     display: none;
-    padding: 0 10px 10px 10px;
   }
 }
