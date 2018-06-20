@@ -91,25 +91,25 @@
         {% if topPodList %}
           <div class="grid-container">
             {% for i in range(12) %}
-              <div class="grid-item">
+              <div class="grid-item" id="grid-item-top-{{i}}" onClick="show_modal(this.id)">
                 <p>{{topPodList[0][i]}}</p>
                 <img src="{{topPodList[1][i]}}"/>
               </div>
               <!-- The Modal -->
-              <div id="myModal" class="modal">
+              <div id="modal-item-top-{{i}}" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
-                  <span class="close">&times;</span>
+                  <span class="close" id="close-top-{{i}}" onClick="hide_modal(this.id)">&times;</span>
                   <h3>{{topPodList[0][i]}}</h3>
                   </br>
                   <h4>Description:</h4>
                   <p>{{topPodList[2][i]}}</p>
                   </br>
                   <h4>Check out the podcast's website and listen to episodes:</h4>
-                  <p><a href="{{topPodList[3][i]}}">{{topPodList[3][i]}}</a></p>
+                  <p><a href="{{topPodList[3][i]}}" target="_blank">{{topPodList[3][i]}}</a></p>
                   </br>
                   <h4>Subscribe or view the podcast on gpodder.net:</h4>
-                  <p><a href="{{topPodList[4][i]}}">{{topPodList[4][i]}}</a></p>
+                  <p><a href="{{topPodList[4][i]}}" target="_blank">{{topPodList[4][i]}}</a></p>
                   </br>
                 </div>
               </div>
@@ -157,5 +157,30 @@
       </div>
 
     </div>
+
+
+    <script>
+
+      function show_modal(clicked_id) {
+        var idNum = clicked_id.substring(14);
+        var modal = document.getElementById('modal-item-top-' + idNum);
+        modal.style.display = "block";
+      }
+
+      function hide_modal(clicked_id) {
+        var idNum = clicked_id.substring(10);
+        var modal = document.getElementById('modal-item-top-' + idNum);
+        modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+      }
+    </script>
+
+
   </body>
 </html>
