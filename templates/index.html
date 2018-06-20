@@ -29,6 +29,7 @@
       </div>
       <div class="logo-text">TrackCast</div>
 
+      <!-- Menu bar -->
       <nav>
         <ul>
           <li><a href="#subscrition-section">Subscriptions</a></li>
@@ -52,13 +53,31 @@
       </div>
 
       <!-- Begin Subscription Section -->
-      <div id="subscription-section" class="div-header-text">Subscriptions
+      <div id="subscription-section" class="div-header-text">Subscriptions (Click on Podcasts for details)
         {% if subPodList and lengthSub %}
           <div class="grid-container">
             {% for i in range(lengthSub) %}
-              <div class="grid-item">
+              <div class="grid-item" id="grid-item-sub-{{i}}" onClick="show_modal_sub(this.id)">
                 <p>{{subPodList[0][i]}}</p>
                 <img src="{{subPodList[1][i]}}"/>
+              </div>
+              <!-- The Modal -->
+              <div id="modal-item-sub-{{i}}" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close" id="close-sub-{{i}}" onClick="hide_modal_sub(this.id)">&times;</span>
+                  <h3>{{subPodList[0][i]}}</h3>
+                  </br>
+                  <h4>Description:</h4>
+                  <p>{{subPodList[2][i]}}</p>
+                  </br>
+                  <h4>Check out the podcast's website and listen to episodes:</h4>
+                  <p><a href="{{subPodList[3][i]}}" target="_blank">{{subPodList[3][i]}}</a></p>
+                  </br>
+                  <h4>Subscribe or view the podcast on gpodder.net:</h4>
+                  <p><a href="{{subPodList[4][i]}}" target="_blank">{{subPodList[4][i]}}</a></p>
+                  </br>
+                </div>
               </div>
             {% endfor %}
           </div>
@@ -77,9 +96,27 @@
         {% if searchResults and length %}
           <div class="grid-container">
             {% for i in range(length) %}
-              <div class="grid-item">
+              <div class="grid-item" id="grid-item-search-{{i}}" onClick="show_modal_search(this.id)">
                 <p>{{searchResults[0][i]}}</p>
                 <img src="{{searchResults[1][i]}}"/>
+              </div>
+              <!-- The Modal -->
+              <div id="modal-item-search-{{i}}" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close" id="close-search-{{i}}" onClick="hide_modal_search(this.id)">&times;</span>
+                  <h3>{{searchResults[0][i]}}</h3>
+                  </br>
+                  <h4>Description:</h4>
+                  <p>{{searchResults[2][i]}}</p>
+                  </br>
+                  <h4>Check out the podcast's website and listen to episodes:</h4>
+                  <p><a href="{{searchResults[3][i]}}" target="_blank">{{searchResults[3][i]}}</a></p>
+                  </br>
+                  <h4>Subscribe or view the podcast on gpodder.net:</h4>
+                  <p><a href="{{searchResults[4][i]}}" target="_blank">{{searchResults[4][i]}}</a></p>
+                  </br>
+                </div>
               </div>
             {% endfor %}
           </div>
@@ -91,7 +128,7 @@
         {% if topPodList %}
           <div class="grid-container">
             {% for i in range(12) %}
-              <div class="grid-item" id="grid-item-top-{{i}}" onClick="show_modal(this.id)">
+              <div class="grid-item" id="grid-item-top-{{i}}" onClick="show_modal_top(this.id)">
                 <p>{{topPodList[0][i]}}</p>
                 <img src="{{topPodList[1][i]}}"/>
               </div>
@@ -99,7 +136,7 @@
               <div id="modal-item-top-{{i}}" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
-                  <span class="close" id="close-top-{{i}}" onClick="hide_modal(this.id)">&times;</span>
+                  <span class="close" id="close-top-{{i}}" onClick="hide_modal_top(this.id)">&times;</span>
                   <h3>{{topPodList[0][i]}}</h3>
                   </br>
                   <h4>Description:</h4>
@@ -133,9 +170,27 @@
         {% if browsePodList %}
           <div class="grid-container">
             {% for i in range(16) %}
-              <div class="grid-item">
+              <div class="grid-item" id="grid-item-browse-{{i}}" onClick="show_modal_browse(this.id)">
                 <p>{{browsePodList[0][i]}}</p>
                 <img src="{{browsePodList[2][i]}}"/>
+              </div>
+              <!-- The Modal -->
+              <div id="modal-item-browse-{{i}}" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close" id="close-sub-{{i}}" onClick="hide_modal_browse(this.id)">&times;</span>
+                  <h3>{{browsePodList[0][i]}}</h3>
+                  </br>
+                  <h4>Description:</h4>
+                  <p>{{browsePodList[1][i]}}</p>
+                  </br>
+                  <h4>Check out the podcast's website and listen to episodes:</h4>
+                  <p><a href="{{browsePodList[3][i]}}" target="_blank">{{browsePodList[4][i]}}</a></p>
+                  </br>
+                  <h4>Subscribe or view the podcast on gpodder.net:</h4>
+                  <p><a href="{{browsePodList[4][i]}}" target="_blank">{{browsePodList[5][i]}}</a></p>
+                  </br>
+                </div>
               </div>
             {% endfor %}
           </div>
@@ -158,29 +213,55 @@
 
     </div>
 
-
+    <!--  Javascript for displaying podcast modals -->
     <script>
-
-      function show_modal(clicked_id) {
+      function show_modal_top(clicked_id) {
         var idNum = clicked_id.substring(14);
         var modal = document.getElementById('modal-item-top-' + idNum);
         modal.style.display = "block";
       }
 
-      function hide_modal(clicked_id) {
+      function hide_modal_top(clicked_id) {
         var idNum = clicked_id.substring(10);
         var modal = document.getElementById('modal-item-top-' + idNum);
         modal.style.display = "none";
       }
 
-      // When the user clicks anywhere outside of the modal, close it
-      window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+      function show_modal_search(clicked_id) {
+        var idNum = clicked_id.substring(17);
+        var modal = document.getElementById('modal-item-search-' + idNum);
+        modal.style.display = "block";
+      }
+
+      function hide_modal_search(clicked_id) {
+        var idNum = clicked_id.substring(13);
+        var modal = document.getElementById('modal-item-search-' + idNum);
+        modal.style.display = "none";
+      }
+
+      function show_modal_sub(clicked_id) {
+        var idNum = clicked_id.substring(14);
+        var modal = document.getElementById('modal-item-sub-' + idNum);
+        modal.style.display = "block";
+      }
+
+      function hide_modal_sub(clicked_id) {
+        var idNum = clicked_id.substring(10);
+        var modal = document.getElementById('modal-item-sub-' + idNum);
+        modal.style.display = "none";
+      }
+
+      function show_modal_browse(clicked_id) {
+        var idNum = clicked_id.substring(17);
+        var modal = document.getElementById('modal-item-browse-' + idNum);
+        modal.style.display = "block";
+      }
+
+      function hide_modal_browse(clicked_id) {
+        var idNum = clicked_id.substring(13);
+        var modal = document.getElementById('modal-item-browse-' + idNum);
+        modal.style.display = "none";
       }
     </script>
-
-
   </body>
 </html>

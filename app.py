@@ -77,8 +77,13 @@ def listenFirst(topPodList):
     topPodList[5][18] = 'https://feed.theskepticsguide.org/feed/rss'
 
     for feedUrl in topPodList[5]:
-        tree = ET.ElementTree(file=urlopen(feedUrl))
-        root = tree.getroot()
+        try:
+            tree = ET.ElementTree(file=urlopen(feedUrl))
+            root = tree.getroot()
+        except URLError:
+            return "There's been an error accessing the feed for one of the listenFirst podcasts."
+        except HTTPError:
+            return "There's been an error accessing the feed for one of the listenFirst podcasts."
 
         allDates = []
         for date in root.findall("./channel/item/pubDate"):
@@ -133,10 +138,12 @@ topTagList = getTopTags()
 # list contains titles of most frequent publishing podcast to least frequent
 lFList = listenFirst(topPodList)
 
+# renders home page
 @app.route('/')
 def home():
     return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList)
 
+# renders page with subscriptions after user logs in
 @app.route('/', methods=["POST"])
 def formhandler():
     """Handle the form submission"""
@@ -147,12 +154,16 @@ def formhandler():
     setLoginInfo(uName, pWord)
     subs = url + '/subscriptions/' + uName + '.json'
 
-    subsJson = requests.get(subs, auth=(uName, pWord))
+    try:
+        subsJson = requests.get(subs, auth=(uName, pWord))
+        subPodList = makePodList(subsJson)
+    except ValueError:
+        return "Incorrect username or password. Please go back and try again"
 
-    subPodList = makePodList(subsJson)
     lengthSub = len(subPodList[0])
     return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, subPodList=subPodList, lengthSub=lengthSub)
 
+# renders page with user's search results
 @app.route('/search', methods=["POST"])
 def searchhandler():
     """Handle the search submission"""
@@ -174,6 +185,7 @@ def searchhandler():
         lengthSub = 0
     return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, subPodList=subPodList, lengthSub = lengthSub, searchResults=searchList, length=length)
 
+# renders page with user's browse results
 @app.route('/browse', methods=["POST"])
 def browsehandler():
     browseChoice = request.form['browseChoice']
@@ -188,6 +200,8 @@ def browsehandler():
     descriptionList = []
     imgList = []
     subList = []
+    siteList = []
+    gpSiteList = []
 
     for i in range(len(tagSearch)):
         browse = url + '/api/2/tag/' + tagSearch[i] + '/100.json'
@@ -204,8 +218,12 @@ def browsehandler():
                     imgList.append(value)
                 if attribute == "subscribers":
                     subList.append(value)
+                if attribute == "website":
+                    siteList.append(value)
+                if attribute == "mygpo_link":
+                    gpSiteList.append(value)
 
-    browsePodList = [titleList, descriptionList, imgList, subList]
+    browsePodList = [titleList, descriptionList, imgList, subList, siteList, gpSiteList]
 
 
     #sort by popularity (subscriber number descending)
