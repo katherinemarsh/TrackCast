@@ -199,12 +199,25 @@ button {
 }
 
 #lF-list {
-    overflow: scroll;
-    max-height: 250px;
-    display:inline-block;
-    padding: 5px;
-    text-align: left;
-    margin-bottom: 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 250px;
+  display:inline-block;
+  padding: 5px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+#twitter-feed-section {
+  width: 100%;
+  background-color: #e37262;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+#twitter-feed-section h3{
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 /* The following modal code was obtained by w3schools tutorial at https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal */
@@ -246,26 +259,4 @@ button {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-}
-
-/* Responsive styling */
-@media screen (max-width: 400px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media screen (max-width: 800px) {
-  #log-in {
-    width: 100%;
-  }
-  #subscription-section {
-    width: 100%;
-  }
-  .grid-container {
-    grid-template-columns: 1fr 1fr;
-  }
-  nav li {
-    display: none;
-  }
 }

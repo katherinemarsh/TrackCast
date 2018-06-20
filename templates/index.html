@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Open+Sans:300,400,600,300italic,600italic,700" rel="stylesheet" type="text/css" media="all">
 
 
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" type="text/css" href="static/css/main.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 </head>
@@ -37,6 +37,8 @@
           <li><a href="#top-section">Top Podcasts</a></li>
           <li><a href="#browse-section">Browse</a></li>
           <li><a href="#listen-first-section">Listen First</a></li>
+          <li><a href="#twitter-feed-section">Twitter Feed</a></li>
+
         </ul>
       </nav>
 
@@ -209,6 +211,19 @@
             </ol>
           </div>
         {% endif %}
+      </div>
+
+      <!-- Begin Twitter Feed Section -->
+      <div id="twitter-feed-section" class="div-header-text">Twitter feed
+        <h3> Follow some of the top podcasts' twitter feeds and discover more podcasts to follow!</h3>
+        <div class="twitter">
+          <a class="twitter-timeline"
+            href="https://twitter.com/TrackcastTweets/lists/trackcasttwitter?ref_src=twsrc%5Etfw"
+            data-width="500"
+            data-height="400">
+          </a>
+        </div>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
 
     </div>
