@@ -25,7 +25,7 @@ Browse, search, and view all your podcasts in a convenient and appealing format!
 #### TLDR
 TrackCast offers a display of your gPodder podcast subscriptions, browse, and search, as well as a "top list" section with the most subscribed podcasts. Select each podcast for a description and link to websites. 
 
-Listen first orders top 25 podcasts into most frequent publishing to least. Twitter feed offers multiple sources of podcast information from Apple Podcast and specific podcast accounts.
+The listen first section orders top 25 podcasts into most frequent publishing to least. Twitter feed offers multiple sources of podcast information from Apple Podcast and specific podcast accounts.
 
 #### Analyzing Data From gPodder
 The gPodder API was used to obtain user's subscriptions, in addition to searches and tags. Top tags(used as browse categories) were found by parsing gPodder tag data and sorting by most used.
