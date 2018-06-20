@@ -3,6 +3,8 @@ import requests
 import json
 import xml.etree.cElementTree as ET
 from urllib.request import urlopen
+from urllib.error import HTTPError
+from urllib.error import URLError
 from dateutil import parser
 from datetime import date
 
@@ -71,19 +73,26 @@ def getTopTags():
 def listenFirst(topPodList):
     daysBwEpList = []
 
-    # the following urls needed to be fixed to prevent 403 errors
-    topPodList[5][1] = 'http://feed.thisamericanlife.org/talpodcast?format=xml'
-    topPodList[5][9] = 'https://www.engadget.com/rss.xml'
-    topPodList[5][18] = 'https://feed.theskepticsguide.org/feed/rss'
+    # the following urls needed to be fixed, as they caused URLErrors in natural form from gPodder
+    topPodList[1][1] = 'http://feed.thisamericanlife.org/talpodcast?format=xml'
+    topPodList[1][9] = 'https://www.engadget.com/rss.xml'
+    topPodList[1][18] = 'https://feed.theskepticsguide.org/feed/rss'
 
-    for feedUrl in topPodList[5]:
+    # in case gPodder changes feed urls, and more cause errors, the following is the correct frequency ordering for
+        # the current top 25 podcasts
+    backup = ["The Skeptics\' Guide to the Universe", 'TED Talks Daily (SD video)', 'Hacker Public Radio',
+     'The Documentary', 'Stuff You Should Know', 'Planet Money', 'Science Friday', 'Car Talk',
+      'Freakonomics Radio', 'This Week in Tech (MP3)', 'Security Now (MP3)', 'Friday Night Comedy from BBC Radio 4',
+       'FLOSS Weekly (MP3)', 'This Week in Google (MP3)', 'The Linux Action Show! MP3', "Wait Wait... Don't Tell Me!",
+        'The Naked Scientists Podcast', 'This American Life', 'Engadget RSS Feed', 'In Our Time', 'Radiolab', 'Going Linux',
+         'Linux Outlaws', 'Science in Action', 'Dan Carlin\'s Hardcore History']
+
+    for i in range(len(topPodList[1])):
         try:
-            tree = ET.ElementTree(file=urlopen(feedUrl))
+            tree = ET.ElementTree(file=urlopen(topPodList[1][i]))
             root = tree.getroot()
-        except URLError:
-            return "There's been an error accessing the feed for one of the listenFirst podcasts."
-        except HTTPError:
-            return "There's been an error accessing the feed for one of the listenFirst podcasts."
+        except (URLError, HTTPError) as e:
+            return backup
 
         allDates = []
         for date in root.findall("./channel/item/pubDate"):
@@ -110,7 +119,6 @@ def listenFirst(topPodList):
     podcastAndFreqList = list(zip(*podcastAndFreqList))
     podcastAndFreqList = sorted(podcastAndFreqList, key=lambda item: item[1])
     podcastAndFreqList = list(zip(*podcastAndFreqList))
-
     return podcastAndFreqList[0]
 
 userName = ""
@@ -136,7 +144,7 @@ topPodList = getTopPodcasts()
 topTagList = getTopTags()
 
 # list contains titles of most frequent publishing podcast to least frequent
-lFList = listenFirst(topPodList)
+lFList = listenFirst([topPodList[0], topPodList[5]])
 
 # renders home page
 @app.route('/')
@@ -240,4 +248,4 @@ def browsehandler():
     return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, subPodList=subPodList, lengthSub=lengthSub, browsePodList=browsePodList)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

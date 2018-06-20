@@ -9,7 +9,6 @@ h1, h2, h3, h4, h5 {
   margin: 0;
 }
 
-
 header, nav, footer, section, article, div {
   box-sizing: border-box;
 }
@@ -37,17 +36,20 @@ img {
 header {
   width: 100%;
 }
+
 .logo-img {
   font-size: 2.75em;
   color: #e37262;
   padding: 0 6px 0 10px;
 }
+
 .logo-text {
   color: #474747;
   padding-top: 10px;
   padding-right: 30px;
   font: 35px "Roboto", sans-serif;
 }
+
 nav {
   width: 80%;
   height: 35px;
