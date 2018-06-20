@@ -41,12 +41,11 @@ def makePodList(requestList):
                 gpSiteList.append(value)
 
     # list contains sublists of all needed podcast info
-    podcastInfo = [titleList, imgList, descriptionList, siteList, gpSiteList, feedUrlList, subList]
-    return podcastInfo
+    subPodList = [titleList, imgList, descriptionList, siteList, gpSiteList, feedUrlList, subList]
+    return subPodList
 
 # returns list with all podcast info for the current top 25 podcasts
 def getTopPodcasts():
-
     topPodcasts = url + '/toplist/25.json'
     topPodcastsJson = requests.get(topPodcasts)
     topPodList = makePodList(topPodcastsJson)
@@ -109,6 +108,21 @@ def listenFirst(topPodList):
 
     return podcastAndFreqList[0]
 
+userName = ""
+passWord = ""
+
+def setLoginInfo(uName, pWord):
+    userName = uName
+    password = passWord
+
+# returns list of user's podcast subscriptions
+def getSubPodcasts(uName, pWord):
+    subs = url + '/subscriptions/' + uName + '.json'
+
+    subsJson = requests.get(subs, auth=(uName, pWord))
+
+    subPodList = makePodList(subsJson)
+    return subPodList
 
 # list contains all info for the top 25 podcasts to display
 topPodList = getTopPodcasts()
@@ -130,18 +144,14 @@ def formhandler():
     uName = request.form['username']
     pWord = request.form['password']
 
+    setLoginInfo(uName, pWord)
     subs = url + '/subscriptions/' + uName + '.json'
 
     subsJson = requests.get(subs, auth=(uName, pWord))
 
-    podcastInfo = makePodList(subsJson)
-    lengthCount = len(podcastInfo[0])
-
-    topPodList = getTopPodcasts()
-    return home(topPodList)
-    topTagList = getTopTags()
-
-    return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, subscriptions=podcastInfo, lengthCount=lengthCount)
+    subPodList = makePodList(subsJson)
+    lengthSub = len(subPodList[0])
+    return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, subPodList=subPodList, lengthSub=lengthSub)
 
 @app.route('/search', methods=["POST"])
 def searchhandler():
@@ -153,14 +163,16 @@ def searchhandler():
 
     searchJson = requests.get(search)
 
-    searchPodcastInfo = makePodList(searchJson)
-    length = len(searchPodcastInfo[0])
-    subscriptions = [0, 0], [0, 0], [0, 0]
-    browsePodList = [0, 0], [0, 0], [0, 0]
+    searchList = makePodList(searchJson)
+    length = len(searchList[0])
 
-    topTagList = getTopTags()
-
-    return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, searchResults=searchPodcastInfo, length=length, lengthCount=0, subscriptions=subscriptions)
+    if (userName != ""):
+        subPodList = getSubPodcasts(userName, passWord)
+        lengthSub = len(subPodList[0])
+    else:
+        subPodList = []
+        lengthSub = 0
+    return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, subPodList=subPodList, lengthSub = lengthSub, searchResults=searchList, length=length)
 
 @app.route('/browse', methods=["POST"])
 def browsehandler():
@@ -195,13 +207,19 @@ def browsehandler():
 
     browsePodList = [titleList, descriptionList, imgList, subList]
 
+
     #sort by popularity (subscriber number descending)
     browsePodList = list(zip(*browsePodList))
-    browsePodList = sorted(browsePodList, key=lambda item: item[3])
+    browsePodList = sorted(browsePodList, reverse=True, key=lambda item: item[3])
     browsePodList = list(zip(*browsePodList))
 
-    # just need to implement below!
-    return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, browsePodList=browsePodList)
+    if (userName != ""):
+        subPodList = getSubPodcasts(userName, passWord)
+        lengthSub = len(subPodList[0])
+    else:
+        subPodList = []
+        lengthSub = 0
+    return render_template('index.html', topTagList=topTagList, topPodList=topPodList, lFList=lFList, subPodList=subPodList, lengthSub=lengthSub, browsePodList=browsePodList)
 
 if __name__ == '__main__':
     app.run(debug=True)

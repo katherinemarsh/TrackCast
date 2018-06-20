@@ -53,12 +53,12 @@
 
       <!-- Begin Subscription Section -->
       <div id="subscription-section" class="div-header-text">Subscriptions
-        {% if subscriptions and lengthCount %}
+        {% if subPodList and lengthSub %}
           <div class="grid-container">
-            {% for i in range(lengthCount) %}
+            {% for i in range(lengthSub) %}
               <div class="grid-item">
-                <p>{{subscriptions[0][i]}}</p>
-                <img src="{{subscriptions[1][i]}}"/>
+                <p>{{subPodList[0][i]}}</p>
+                <img src="{{subPodList[1][i]}}"/>
               </div>
             {% endfor %}
           </div>
@@ -95,6 +95,24 @@
                 <p>{{topPodList[0][i]}}</p>
                 <img src="{{topPodList[1][i]}}"/>
               </div>
+              <!-- The Modal -->
+              <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <h3>{{topPodList[0][i]}}</h3>
+                  </br>
+                  <h4>Description:</h4>
+                  <p>{{topPodList[2][i]}}</p>
+                  </br>
+                  <h4>Check out the podcast's website and listen to episodes:</h4>
+                  <p><a href="{{topPodList[3][i]}}">{{topPodList[3][i]}}</a></p>
+                  </br>
+                  <h4>Subscribe or view the podcast on gpodder.net:</h4>
+                  <p><a href="{{topPodList[4][i]}}">{{topPodList[4][i]}}</a></p>
+                  </br>
+                </div>
+              </div>
             {% endfor %}
           </div>
         {% endif %}
@@ -126,13 +144,15 @@
 
       <!-- Begin Listen First Section -->
       <div id="listen-first-section" class="div-header-text">Listen First
-        <p> According to the frequency of episode postings in the top 25 podcasts, to avoid falling behind on your favorite podcasts you should listen in the following order: </p>
+        <h3> According to the frequency of episode postings in the top 25 podcasts, to avoid falling behind you should listen in the following order: </p>
         {% if lFList %}
-          <ol>
-            {% for podcast in lFList %}
-              <li>{{podcast}}</li>
-            {% endfor %}
-          </ol>
+          <div id="lF-list">
+            <ol>
+              {% for podcast in lFList %}
+                <li>{{podcast}}</li>
+              {% endfor %}
+            </ol>
+          </div>
         {% endif %}
       </div>
 
