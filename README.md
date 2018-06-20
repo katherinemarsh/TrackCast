@@ -13,8 +13,11 @@ Browse, search, and view all your podcasts in a convenient and appealing format!
 
 #### Technology:
 **Front End:** HTML5, Javascript, css
+
 **Back End:** Flask, Python3
+
 **Data:** Jupyter Notebook
+
 **APIs:** gPodder, Twitter
 
 ---
