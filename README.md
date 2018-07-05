@@ -50,12 +50,7 @@ To avoid a text-heavy and clunky interface, TrackCast offers modal pop-ups that 
 
 TrackCast is also responsive to mobile users, thanks to flex-wrap css syling.
 
-<img src = "static/Trackcast_screenshot4.PNG" height=250px class="aligncenter"/>
-<style>
-.aligncenter {
-    text-align: center;
-}
-</style>
+<img src = "static/Trackcast_screenshot4.PNG" height=250px style="text-align: center;"/>
 
 A clean logo and icon complements the application's simple design.
 
