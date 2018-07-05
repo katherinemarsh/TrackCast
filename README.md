@@ -39,9 +39,9 @@ TrackCast offers a clean and appealing design to all users, with a nav bar to pr
 
 <img src = "static/Trackcast_screenshot1.PNG"/>
 
-View subscriptions by entering your username and password in the log-in form.
-The example above is for the following account info:
-username = user_1
+View subscriptions by entering your username and password in the log-in form.  
+The example above is for the following account info:  
+username = user_1  
 password = test
 
 To avoid a text-heavy and clunky interface, TrackCast offers modal pop-ups that contain descriptions and links for every podcast. This is especially helpful for mobile versions, which would be quite clunky if excessive descriptions were automatically displayed.
@@ -49,6 +49,8 @@ To avoid a text-heavy and clunky interface, TrackCast offers modal pop-ups that 
 <img src = "static/Trackcast_screenshot2.PNG"/>
 
 TrackCast is also responsive to mobile users, thanks to flex-wrap css syling.
+
+<img src = "static/Trackcast_screenshot4.png"/>
 
 A clean logo and icon complements the application's simple design.
 
