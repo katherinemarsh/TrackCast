@@ -37,7 +37,7 @@ In addition to a podcast description, all podcasts also provide a link to their 
 #### Front End Design
 TrackCast offers a clean and appealing design to all users, with a nav bar to provide quick navigation.
 
-![](static/Trackcast_screenshot1.png)
+<img src = "static/Trackcast_screenshot1.PNG"/>
 
 View subscriptions by entering your username and password in the log-in form.
 The example above is for the following account info:
@@ -46,7 +46,7 @@ password = test
 
 To avoid a text-heavy and clunky interface, TrackCast offers modal pop-ups that contain descriptions and links for every podcast. This is especially helpful for mobile versions, which would be quite clunky if excessive descriptions were automatically displayed.
 
-![](static/Trackcast_screenshot2.png)
+<img src = "static/Trackcast_screenshot2.PNG"/>
 
 TrackCast is also responsive to mobile users, thanks to flex-wrap css syling.
 
@@ -61,4 +61,4 @@ At the beginning of this challenge, I knew about very few podcasts, so to inform
 For example:
 Through TrackCast's twitter feed, I noticed a post Apple Podcast made during the E32018 video game conference. That post just happened to be on a podcast by Nintendo - the geniuses that developed Mario Kart and Super Smash Bros. I used TrackCast's search function to find Nintendo Power Podcast, and used the link provided to subscribe and listen about Zelda and Super Smash Bros to my heart's content. 
 
-![](static/Trackcast_screenshot3.png)
+<img src = "static/Trackcast_screenshot3.PNG"/>
